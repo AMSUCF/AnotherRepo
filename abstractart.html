@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title>Abstract Art Generator</title>
+<meta charset='utf-8'>
+<style>
+body {
+ font-family: Verdana, Helvetica, sans-serif;
+}
+canvas {
+ border: 1px solid black;;
+}
+</style>
+<script>
+function makeTitle() {
+	//generate the title for your masterpiece
+	var line1 = ['Meditative', 'Objective', 'Reflective', ];
+	var line2 = ['Ellipses', 'Tranformation', 'State', 'Emotion', 'Composition'];
+	var line3 = ['I', 'II', 'III', 'IV', 'V'];
+	var rand1 = Math.floor(Math.random() * line1.length);
+	var rand2 = Math.floor(Math.random() * line2.length);
+	var rand3 = Math.floor(Math.random() * line3.length);
+	var title = line1[rand1] + ' ' + line2[rand2] + ' ' + line3[rand3];
+	return(title);
+}
+function artHandler() {
+	var title = makeTitle();
+	alert(title);
+
+	var canvas = document.getElementById('artCanvas');
+	var context = canvas.getContext('2d');
+
+	fillBackgroundColor(canvas, context);
+
+	var colors = ['white', 'yellow', 'blue', 'red'];
+	var shapes = ['square', 'circle'];
+	for (var i = 0; i < 20; i++) {
+		var color = colors[Math.floor(Math.random() * colors.length)];
+		//drawSquare(canvas, context, color);
+		drawCircle(canvas, context, color);
+	}
+	drawText(canvas, context, title);
+}
+function fillBackgroundColor(canvas, context) {
+	var colors = ['white', 'yellow', 'blue', 'red'];
+	var bgColor = colors[Math.floor(Math.random() * colors.length)];
+	context.fillStyle = bgColor;
+	context.fillRect(0, 0, canvas.width, canvas.height);
+}
+function degreesToRadians(degrees) {
+	return (degrees * Math.PI)/180;
+}
+//Draws a square at a random location
+//function drawSquare(canvas, context, color) {
+//	var w = Math.floor(Math.random() * 40);
+//	var x = Math.floor(Math.random() * canvas.width);
+//	var y = Math.floor(Math.random() * canvas.height);
+//	context.fillStyle = color;
+//	context.fillRect(x, y, w, w);
+//}
+// Draws a circle at a random location
+function drawCircle(canvas, context, color) {
+	var radius = Math.floor(Math.random() * 40);
+	var x = Math.floor(Math.random() * canvas.width);
+	var y = Math.floor(Math.random() * canvas.height);
+	context.beginPath();
+	context.arc(x, y, radius, 0, degreesToRadians(360), true);
+	context.fillStyle = color;
+	context.fill();
+}
+function drawText(canvas, context, title) {
+	context.fillStyle = 'black';
+	context.font = 'bold 1em sans-serif';
+	context.textAlign = 'right';
+	context.fillText(title, canvas.width-20, canvas.height-40);
+}
+window.onload = function() {
+	var button = document.getElementById('artButton');
+	button.onclick = artHandler;
+}
+</script>
+</head>
+<body>
+<h1>Abstract Art:</h1>
+<canvas width='600' height='200' id='artCanvas'></canvas>
+<form>
+<input type='button' id='artButton' value='New Masterpiece'>
+</form>
+</body>
+</html>
